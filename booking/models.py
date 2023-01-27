@@ -80,7 +80,6 @@ class Room(models.Model):
 class Booking(models.Model):
     """booking model to save data of each booking instance"""
     
-    listing_owner = models.ForeignKey("booking.ListingOwner",null=True, on_delete=models.SET_NULL)
     guest         = models.ForeignKey("booking.Guest",null=True, on_delete=models.SET_NULL)
     room          = models.ForeignKey("booking.Room",null=True, on_delete=models.SET_NULL, related_name='bookings')
     # if no check in set, today and tomorrow will be check in and out
@@ -95,7 +94,7 @@ class Booking(models.Model):
         return f"{self.room.id} {self.guest.name}" 
 
     def listin_owner_name(self) -> str:
-        return self.listing_owner.name 
+        return f'{self.guest.name} - {self.room.id}' 
 
     def charge(self) -> float:
         """cacluate the the price of the booking \

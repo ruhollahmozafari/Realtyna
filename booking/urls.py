@@ -7,6 +7,7 @@ from .views import (RoomListView,
                     RoomRetriveView,
                     GuestRetriveView,
                     RoomAvailability,
+                    BookingCreateView,
                     )
 
 urlpatterns = [
@@ -17,4 +18,6 @@ urlpatterns = [
     path('rooms/<int:pk>/', RoomRetriveView.as_view(), name = 'room_retrieve'),
     path('guests/', GuestRetriveView.as_view(), name = 'guest_list'),
     path('availability/<str:date>/', RoomAvailability.as_view(), name = 'rooms_availability'),
+    path('set/', BookingCreateView.as_view(), name = 'set_booking'),
+    
 ]

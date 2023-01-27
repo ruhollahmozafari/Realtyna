@@ -6,7 +6,7 @@ from .models import (Guest,
                      Booking,)
 
 class BookingAdmin(admin.ModelAdmin):
-    list_display  = ['id','room', 'listing_owner', 'guest', 'checkin_date', 'checkout_date']
+    list_display  = ['id','room', 'guest', 'checkin_date', 'checkout_date']
 
 
 class RoomAdmin(admin.ModelAdmin):

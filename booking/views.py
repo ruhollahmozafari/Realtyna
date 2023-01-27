@@ -8,12 +8,12 @@ from .serializers import (RoomSerializer,
                          ListingOwnerSerializer, 
                          GuestSerializer,
                          LessorSerializer,
-                         BookingSerializerCreate,
+                         BookingCreateSerializer,
                          BookingNestedSerializerShow,
                          RoomNestedSerializer,
                          )
 
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from .filters import RoomFilters, BookingFilters
 
 class RoomListView(ListAPIView):
@@ -25,14 +25,14 @@ class RoomAvailability(ListAPIView):
     """api to filter all available rooms in a specific date by excluding booking for room in that day"""
     serializer_class = RoomSerializer
     filterset_class = RoomFilters
-    # queryset = Room.objects.filter()
+
     
     def get_queryset(self):
         """use the booking model to exclude the rooms that are booked in that date
         these also return number of rooms in response,"""
         qr = Room.objects.prefetch_related('bookings').exclude(
-            bookings__checkin_date__lte = self.kwargs.get('date'), 
-            bookings__checkout_date__gt = self.kwargs.get('date'))
+            bookings__checkin_date__gte= self.kwargs.get('date'), 
+            bookings__checkout_date__lt = self.kwargs.get('date'))
         return qr 
 
 
@@ -64,9 +64,14 @@ class BookingRetriveView(ListAPIView):
                                 'room', 'guest', 'listing_owner'
                                 ).filter()#TODO: use django debug
     
-
 class GuestRetriveView(ListAPIView):
     serializer_class = GuestSerializer
     queryset = Guest.objects.filter()
     
 
+class BookingCreateView(CreateAPIView):
+    """api to create a booking instance, validation will be checked in serializer class"""
+    serializer_class = BookingCreateSerializer
+    queryset = Booking.objects.filter()
+    
+    
