@@ -15,6 +15,8 @@ from .serializers import (RoomSerializer,
 
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from .filters import RoomFilters, BookingFilters
+from .tools import send_email
+
 
 class RoomListView(ListAPIView):
     serializer_class = RoomSerializer
@@ -56,22 +58,41 @@ class LessorsRetriveView(ListAPIView):
     # filterset_class = TempUserFilters
     queryset = Lessor.objects.filter()
 
-
-class BookingRetriveView(ListAPIView):
-    serializer_class = BookingNestedSerializerShow
-    filterset_class = BookingFilters
-    queryset = Booking.objects.select_related(
-                                'room', 'guest', 'listing_owner'
-                                ).filter()#TODO: use django debug
-    
+ 
 class GuestRetriveView(ListAPIView):
     serializer_class = GuestSerializer
     queryset = Guest.objects.filter()
     
 
+class BookingRetriveView(ListAPIView):
+    serializer_class = BookingNestedSerializerShow
+    filterset_class = BookingFilters
+    queryset = Booking.objects.select_related(
+                                'room', 'guest',
+                                ).filter()#TODO: use django debug
+
+
 class BookingCreateView(CreateAPIView):
+    
+    
     """api to create a booking instance, validation will be checked in serializer class"""
     serializer_class = BookingCreateSerializer
     queryset = Booking.objects.filter()
+    authentication_classes = []
+    permission_classes =  []
     
+    def create(self, request, *args, **kwargs):
+        res = super().create(request, *args, **kwargs)
+        
+        # send notifcation email by celery
+        guest = Guest.objects.get(id = request.data['guest'])
+        try: # just to set later
+            send_email.apply_async(
+                ('Realtyna Room Booking',
+                " you have booked a room with us,",
+                guest.email ),)
+        except: pass
+        return res
+
+
     

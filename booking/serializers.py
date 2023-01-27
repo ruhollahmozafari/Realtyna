@@ -50,7 +50,6 @@ class BookingNestedSerializerShow(ModelSerializer):
     """nested serilaizer for shwoing booking instances"""
     room = RoomSerializer()
     guest = GuestSerializer()
-    listing_owner = ListingOwnerSerializer()
     
     class Meta:
         model = Booking

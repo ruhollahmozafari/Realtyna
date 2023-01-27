@@ -12,7 +12,7 @@ from .views import (RoomListView,
 
 urlpatterns = [
     path('rooms/', RoomListView.as_view(), name = 'rooms_list'),
-    path('bookings/', BookingRetriveView.as_view(), name = 'booking_list'),
+    path('', BookingRetriveView.as_view(), name = 'booking_list'),
     path('lessors/', LessorsRetriveView.as_view(), name = 'lessor_list'),
     path('listing_owners/', ListingOwnersRetriveView.as_view(), name = 'rooms_list'),
     path('rooms/<int:pk>/', RoomRetriveView.as_view(), name = 'room_retrieve'),
