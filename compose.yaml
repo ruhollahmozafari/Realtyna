@@ -2,21 +2,21 @@ version: "3.1"
 
 services:
 
-  # db:
-  #   image: postgis/postgis
-  #   container_name: postgres-refactor #you can change this
-  #   restart: unless-stopped
-  #   networks:
-  #   environment:
-  #     - POSTGRES_NAME=demo
-  #     - POSTGRES_USER=demo
-  #     - POSTGRES_PASSWORD=demo
-  #     - POSTGRES_DB=demo
-  #     - POSTGRES_HOST_AUTH_METHOD=trust
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data/
+  db:
+    image: postgis/postgis
+    container_name: postgres-refactor #you can change this
+    restart: unless-stopped
+    networks:
+    environment:
+      - POSTGRES_NAME=demo
+      - POSTGRES_USER=demo
+      - POSTGRES_PASSWORD=demo
+      - POSTGRES_DB=demo
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
 
   api:
     ports:
@@ -34,16 +34,6 @@ services:
     volumes:
       - .:/api
     command: python manage.py runserver 0.0.0.0:8003
-    # environment:
-      # - JAEGER_AGENT_HOST=jaeger
-      # - STOREFRONT_URL=http://10.11.10.49:3000/
-      # - DASHBOARD_URL=http://10.11.10.49:9000/
-      # - ALLOWED_HOSTS=10.11.10.49,api,localhost
-      # - DB_USER=demo
-      # - DB_PASSWORD=demo
-      # - DB_NAME=demo
-      # # - DB_PORT=5432
-      # - DB_HOST=db
 
 
 volumes:
