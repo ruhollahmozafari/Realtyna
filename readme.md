@@ -1,6 +1,8 @@
-We would like to send you our Python and Django tech challenge. You will have one week to prepare it and send the results to us. Please consider you should not work more than 8 hours on this technical challenge.
+# Django Rest Project for booking rooms. 
 
-Description:
+You can check the endpoint by going to `localhost:8000/swagger/`. there are description and you can test them.
+
+## Description:
 As a listing owner, I want a system for making and tracking reservations that can be handled by third-party services.
 
 * The system can be used by multiple listings.
@@ -15,18 +17,17 @@ Limitations:
 
 * Authentication / Authorization is not in the scope of this task
 * No localization needed
+## Test 
+The directory `booking/tests` contains test and it assure the reservation process and all the api are working properly.  
 
-Hints:
-* Use third-party packages where applicable!
-
-Some useful points:
-* Use your creativity to complete this application as you like.
-
-We are looking forward to your results!
-If you have any questions, please don't hesitate to contact me.
+## Docker
+there a docker file  and you can deplopyu the project by running command `docker build --tag realtyna .`  and run container by `docker run -d realtyna`
 
 
+note that project was large but since I wanted stick to the 8-hour deadline, I tried to do my best in that short amount of time.
 
-### To Note :
-1- add your config in the env file
-2- 
+
+
+
+
+
